@@ -1,0 +1,22 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+    font-family: IranYekan;
+    src: url('./assets/fonts/IRANSansWeb(FaNum)_Medium.eot'),
+        url('./assets/fonts/IRANSansWeb(FaNum)_Medium.woff') format('woff'),
+        url('./assets/fonts/IRANSansWeb(FaNum)_Medium.ttf') format('truetype');
+    font-weight: medium;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: IranYekan;
+    src: url('./assets/fonts/IRANSansWeb(FaNum).eot'),
+        url('./assets/fonts/IRANSansWeb(FaNum).woff') format('woff'),
+        url('./assets/fonts/IRANSansWeb(FaNum).ttf') format('truetype');
+    font-weight: normal;
+    font-display: swap;
+}
+
