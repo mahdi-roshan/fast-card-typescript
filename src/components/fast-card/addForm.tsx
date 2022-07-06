@@ -1,10 +1,10 @@
 import { useState } from "react";
 import Counter from "../custom-components/forms/counter";
 import CustomButton from "../custom-components/forms/customButton";
-import CustomDatalist from "../custom-components/forms/customDatalist";
-import CustomInput from "../custom-components/forms/customInput";
-import CustomSelect from "../custom-components/forms/customSelect";
-import CustomTextarea from "../custom-components/forms/customTextarea";
+import CustomDatalist from "../custom-components/forms/custom-inputs/customDatalist";
+import CustomInput from "../custom-components/forms/custom-inputs/customInput";
+import CustomSelect from "../custom-components/forms/custom-inputs/customSelect";
+import CustomTextarea from "../custom-components/forms/custom-inputs/customTextarea";
 
 type AddFormProps = {};
 
@@ -38,14 +38,10 @@ const AddFrom = (props: AddFormProps) => {
             <CustomInput
               {...{
                 labalText: "نام و نام خانوادگی",
-                labelStyle:
-                  "text-sm text-gray-800 dark:text-gray-200 mb-2 font-semibold",
-                labelFor: "name",
                 type: "text",
+                labelFor: "name",
                 id: "name",
                 name: "name",
-                styles:
-                  "bg-slate-300 dark:bg-slate-600 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
                 defaultValue: "",
                 handleInput,
               }}
@@ -56,14 +52,10 @@ const AddFrom = (props: AddFormProps) => {
             <CustomInput
               {...{
                 labalText: "شماره همراه",
-                labelStyle:
-                  "text-sm text-gray-800 dark:text-gray-200 mb-2 font-semibold",
-                labelFor: "phone",
                 type: "text",
+                labelFor: "phone",
                 id: "phone",
                 name: "phone",
-                styles:
-                  "bg-slate-300 dark:bg-slate-600 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
                 defaultValue: "",
                 handleInput,
               }}
@@ -74,12 +66,8 @@ const AddFrom = (props: AddFormProps) => {
             <CustomSelect
               {...{
                 labalText: "ویژگی",
-                labelStyle:
-                  "block mb-2 text-sm font-semibold text-gray-800 dark:text-gray-200",
                 labelFor: "features",
                 id: "features",
-                styles:
-                  "bg-slate-300 dark:bg-slate-600 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-slate-600 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
                 options: ["United States", "Canada", "France"],
               }}
             />
@@ -93,14 +81,10 @@ const AddFrom = (props: AddFormProps) => {
             <CustomDatalist
               {...{
                 labalText: "استان",
-                labelStyle:
-                  "text-sm text-gray-800 dark:text-gray-200 mb-2 font-semibold",
-                labelFor: "state",
                 type: "text",
+                labelFor: "state",
                 id: "state",
                 list: "state",
-                styles:
-                  "bg-slate-300 dark:bg-slate-600 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
                 options: ["test1", "test2", "test3", "test4", "test5"],
               }}
             />
@@ -110,14 +94,10 @@ const AddFrom = (props: AddFormProps) => {
             <CustomDatalist
               {...{
                 labalText: "شهر",
-                labelStyle:
-                  "text-sm text-gray-800 dark:text-gray-200 mb-2 font-semibold",
-                labelFor: "city",
                 type: "text",
+                labelFor: "city",
                 id: "city",
                 list: "city",
-                styles:
-                  "bg-slate-300 dark:bg-slate-600 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
                 options: ["test1", "test2", "test3"],
               }}
             />
@@ -127,12 +107,8 @@ const AddFrom = (props: AddFormProps) => {
             <CustomTextarea
               {...{
                 labalText: "نشانی",
-                labelStyle:
-                  "text-sm text-gray-800 dark:text-gray-200 mb-2 font-semibold",
                 labelFor: "address",
                 id: "address",
-                styles:
-                  "block p-2.5 w-full text-sm text-gray-900 bg-slate-300 dark:bg-slate-600 rounded-lg border border-gray-300 focus:ring-blue-500 focus:border-blue-500 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
                 rows: 4,
               }}
             />
