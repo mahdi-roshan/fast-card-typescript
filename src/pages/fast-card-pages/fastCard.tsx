@@ -1,6 +1,18 @@
+import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
+
+import { fetchProductInfo } from "./../../services/fast-card-api/productInfo";
+
 import AddFrom from "../../components/fast-card/addForm";
+import InfoSection from "../../components/fast-card/infoSection";
 
 const FastCard = () => {
+  const params = useParams();
+  const { isLoading, isError, data, error } = useQuery(
+    ["product-info", params.productId],
+    () => fetchProductInfo(params.productId)
+  );
+
   return (
     <>
       <div className="dark:bg-slate-900 m-0 p-0 font-yekan">
@@ -15,16 +27,10 @@ const FastCard = () => {
                 />
               </div>
               <div className=" space-y-4">
-                <div className="flex flex-wrap ">
-                  <div className="flex items-center w-full justify-between min-w-0 ">
-                    <h2 className="text-xl font-bold ml-auto cursor-pointer text-gray-800 dark:text-gray-200 hover:text-purple-500 truncate ">
-                      کفش روزمره مردانه Emery مدل 30604
-                    </h2>
-                    <div className="text-lg text-white dark:text-slate-700 font-semibold bg-purple-500 dark:bg-purple-300 inline-block p-1 rounded-lg">
-                      299,000 تومان
-                    </div>
-                  </div>
-                </div>
+                <InfoSection {...{
+                    name : 'کفش روزمره مردانه Emery مدل 30604',
+                    price : 5360000
+                }}/>    
                 <div>
                   <AddFrom />
                 </div>

@@ -1,5 +1,3 @@
-import React from "react";
-
 type CustomSelectProps = {
   labalText?: string;
   labelStyle?: string;
@@ -22,7 +20,7 @@ const CustomSelect = ({
       <label htmlFor={labelFor} className={labelStyle}>
         {labalText}
       </label>
-      <select id={id} className={styles}>
+      <select onChange={(e)=>{console.log(e.target.name)}} id={id} className={styles} name='test'>
         <option selected>Choose a country</option>
         {options.map((feature) => (
           <option value={feature}>{feature}</option>

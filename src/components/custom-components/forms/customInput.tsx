@@ -1,11 +1,15 @@
+import React from "react";
+
 type CustomInputProps = {
   labalText?: string;
   labelStyle?: string;
   labelFor?: string;
   type: "text" | "email" | "password";
   id?: string;
+  name: string;
   styles: string;
   defaultValue?: string;
+  handleInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const CustomInput = ({
@@ -14,7 +18,9 @@ const CustomInput = ({
   labelFor,
   type,
   id,
+  name,
   styles,
+  handleInput,
   defaultValue,
 }: CustomInputProps) => {
   return (
@@ -25,8 +31,10 @@ const CustomInput = ({
       <input
         type={type}
         id={id}
+        name={name}
         className={styles}
         defaultValue={defaultValue}
+        onChange={(event) => handleInput(event)}
       />
     </>
   );

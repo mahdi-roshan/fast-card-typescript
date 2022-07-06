@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Counter from "../custom-components/forms/counter";
 import CustomButton from "../custom-components/forms/customButton";
 import CustomDatalist from "../custom-components/forms/customDatalist";
@@ -8,12 +9,67 @@ import CustomTextarea from "../custom-components/forms/customTextarea";
 type AddFormProps = {};
 
 const AddFrom = (props: AddFormProps) => {
-  const handleClick = () => {};
+  const [info, setInfo] = useState({
+    name: "",
+    phone: "",
+    feature: "",
+    quantity: 1,
+    state: "",
+    city: "",
+    address: "",
+  });
+
+  const handleInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.target.value);
+    console.log(e.target.name);
+  };
+
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault()
+    console.log(e, 1);
+  };
 
   return (
     <>
       <form>
         <div className="grid grid-cols-2 gap-2 mb-2">
+          {/* name */}
+          <div>
+            <CustomInput
+              {...{
+                labalText: "نام و نام خانوادگی",
+                labelStyle:
+                  "text-sm text-gray-800 dark:text-gray-200 mb-2 font-semibold",
+                labelFor: "name",
+                type: "text",
+                id: "name",
+                name: "name",
+                styles:
+                  "bg-slate-300 dark:bg-slate-600 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+                defaultValue: "",
+                handleInput,
+              }}
+            />
+          </div>
+          {/* phone */}
+          <div>
+            <CustomInput
+              {...{
+                labalText: "شماره همراه",
+                labelStyle:
+                  "text-sm text-gray-800 dark:text-gray-200 mb-2 font-semibold",
+                labelFor: "phone",
+                type: "text",
+                id: "phone",
+                name: "phone",
+                styles:
+                  "bg-slate-300 dark:bg-slate-600 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
+                defaultValue: "",
+                handleInput,
+              }}
+            />
+          </div>
+          {/* feature */}
           <div>
             <CustomSelect
               {...{
@@ -28,9 +84,11 @@ const AddFrom = (props: AddFormProps) => {
               }}
             />
           </div>
+          {/* quantity */}
           <div className="flex justify-center">
             <Counter />
           </div>
+          {/* state */}
           <div>
             <CustomDatalist
               {...{
@@ -47,6 +105,7 @@ const AddFrom = (props: AddFormProps) => {
               }}
             />
           </div>
+          {/* city */}
           <div>
             <CustomDatalist
               {...{
@@ -63,36 +122,7 @@ const AddFrom = (props: AddFormProps) => {
               }}
             />
           </div>
-          <div>
-            <CustomInput
-              {...{
-                labalText: "نام و نام خانوادگی",
-                labelStyle:
-                  "text-sm text-gray-800 dark:text-gray-200 mb-2 font-semibold",
-                labelFor: "name",
-                type: "text",
-                id: "name",
-                styles:
-                  "bg-slate-300 dark:bg-slate-600 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-                defaultValue: "",
-              }}
-            />
-          </div>
-          <div>
-            <CustomInput
-              {...{
-                labalText: "شماره همراه",
-                labelStyle:
-                  "text-sm text-gray-800 dark:text-gray-200 mb-2 font-semibold",
-                labelFor: "phone",
-                type: "text",
-                id: "phone",
-                styles:
-                  "bg-slate-300 dark:bg-slate-600 border border-gray-300 text-gray-900  text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500",
-                defaultValue: "",
-              }}
-            />
-          </div>
+          {/* address */}
           <div className="col-span-2 mb-2">
             <CustomTextarea
               {...{
@@ -113,7 +143,7 @@ const AddFrom = (props: AddFormProps) => {
             {...{
               type: "submit",
               styles:
-                "w-full text-center transition ease-in duration-300 text-sm font-medium mb-2 md:mb-0 bg-purple-500 px-5 hover:shadow-lg tracking-wider text-white rounded-lg hover:bg-purple-600 py-5",
+                "w-full text-center transition ease-in duration-300 text-sm font-medium mb-2 md:mb-0 bg-purple-500 px-5 hover:shadow-lg tracking-wider text-white rounded-lg hover:bg-purple-600 py-3",
               textStyle: "text-center font-bold text-lg",
               text: "ادامه خرید محصول",
               handleClick,
