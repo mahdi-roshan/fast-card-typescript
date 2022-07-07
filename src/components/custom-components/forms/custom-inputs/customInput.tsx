@@ -8,7 +8,7 @@ type CustomInputProps = {
   id?: string;
   name: string;
   defaultValue?: string;
-  handleInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  handleInput: (event: any) => void;
 };
 
 const CustomInput = ({

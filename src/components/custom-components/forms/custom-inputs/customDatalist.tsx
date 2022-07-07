@@ -1,4 +1,4 @@
-import { DataListStyle } from './styles'
+import { DataListStyle } from "./styles";
 
 type CustomDatalistProps = {
   labalText?: string;
@@ -6,7 +6,13 @@ type CustomDatalistProps = {
   type: "text" | "email" | "password";
   id: string;
   list: string;
-  options: string[];
+  name: string;
+  options: {
+    text: string;
+    value: number;
+    longValue: any;
+  }[];
+  handleInput: (event: any) => void;
 };
 
 const CustomDatalist = ({
@@ -15,18 +21,30 @@ const CustomDatalist = ({
   type,
   id,
   list,
+  name,
   options,
+  handleInput,
 }: CustomDatalistProps) => {
   return (
     <>
       <label className={DataListStyle.LabelStyle} htmlFor={labelFor}>
         {labalText}
       </label>
-      <input type={type} list={list} className={DataListStyle.InputStyle} />
+      <input
+        onChange={(event) => handleInput(event)}
+        type={type}
+        list={list}
+        name={name}
+        className={DataListStyle.InputStyle}
+      />
 
       <datalist id={id}>
         {options.map((option) => (
-          <option value={option} />
+          <option
+            className="font-yekan"
+            key={option.value}
+            value={option.text.trim()}
+          />
         ))}
       </datalist>
     </>
