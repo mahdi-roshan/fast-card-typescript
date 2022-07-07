@@ -5,7 +5,7 @@ type CounterProps = {
   labalText?: string;
   type: string;
   labelFor?: string;
-  quantity: number;
+  value: number;
   id: string;
   name: string;
   handleInput: (event: any) => void;
@@ -16,18 +16,20 @@ const Counter = ({
   labelFor,
   type,
   id,
-  quantity,
+  value,
   name,
   handleInput,
 }: CounterProps) => {
-  // const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(value);
 
-  const increment = (e: any) => {
-    quantity + 1
+  const increment = () => {
+    console.log(quantity)
+    setQuantity(quantity + 1);
   };
 
-  const decrement = (e: any) => {
-    quantity - 1
+  const decrement = () => {
+    console.log(quantity)
+    setQuantity(quantity - 1);
   };
 
   return (
@@ -39,10 +41,7 @@ const Counter = ({
         {labalText}
       </label>
       <div className="flex flex-row h-10 w-full rounded-lg relative bg-transparent mt-1">
-        <button
-          className={CounterStyle.DecButtonStyle}
-          onClick={(e) => decrement(e)}
-        >
+        <button className={CounterStyle.DecButtonStyle} onClick={decrement}>
           <span className="m-auto text-2xl font-thin dark:text-white text-gray-900">
             −
           </span>
@@ -55,10 +54,7 @@ const Counter = ({
           value={quantity}
           onChange={handleInput}
         ></input>
-        <button
-          className={CounterStyle.IncButtonStyle}
-          onClick={(e) => increment(e)}
-        >
+        <button className={CounterStyle.IncButtonStyle} onClick={increment}>
           <span className="m-auto text-2xl font-thin dark:text-white text-gray-900">
             +
           </span>

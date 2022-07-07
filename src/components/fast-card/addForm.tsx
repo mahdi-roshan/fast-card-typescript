@@ -28,7 +28,7 @@ const AddFrom = (props: any) => {
   const handleInput = async (e: any) => {
     let name = e.target.name;
     let value = e.target.value;
-    console.log(value);
+    console.log(name);
 
     if (e.target.name === "state") {
       let provinceId = provinceData?.data.data.filter((item: any) => {
