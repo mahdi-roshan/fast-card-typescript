@@ -28,6 +28,7 @@ const AddFrom = (props: any) => {
   const handleInput = async (e: any) => {
     let name = e.target.name;
     let value = e.target.value;
+    console.log(value);
 
     if (e.target.name === "state") {
       let provinceId = provinceData?.data.data.filter((item: any) => {
@@ -44,6 +45,10 @@ const AddFrom = (props: any) => {
     // });
   };
 
+  const handleSubmit = (e: any) => {
+    e.preventDefault();
+  };
+
   const handleClick = (e: any) => {
     e.preventDefault();
     console.log(e, 1);
@@ -54,8 +59,7 @@ const AddFrom = (props: any) => {
       {provincLoading ? (
         ""
       ) : (
-        // <form>
-        <>
+        <form onSubmit={handleSubmit}>
           <div className="grid grid-cols-2 gap-2 mb-2">
             {/* name */}
             <div>
@@ -104,6 +108,7 @@ const AddFrom = (props: any) => {
                   labalText: "تعداد",
                   type: "number",
                   labelFor: "quantity",
+                  value: info.quantity,
                   id: "quantity",
                   name: "qunatity",
                   handleInput,
@@ -171,9 +176,8 @@ const AddFrom = (props: any) => {
               }}
             />
           </div>
-        </>
+        </form>
       )}
-      {/* </form> */}
     </>
   );
 };
