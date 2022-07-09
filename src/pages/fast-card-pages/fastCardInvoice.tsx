@@ -2,8 +2,8 @@ const FastCardInvoice = () => {
   return (
     <>
       <div className="container mx-auto h-screen flex items-center justify-center">
-        <div className="relative overflow-x-auto sm:rounded-lg">
-          <table className="text-sm text-left w-[80%] text-gray-500 dark:text-gray-400">
+        <div className="relative overflow-x-auto sm:rounded-lg w-[50%]">
+          <table className="text-sm text-left w-full text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
                 <th scope="col" className="px-6 py-3">
