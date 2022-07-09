@@ -3,6 +3,7 @@ import { SelectStyle } from "./styles";
 type CustomSelectProps = {
   labalText?: string;
   labelFor?: string;
+  name: string;
   id: string;
   options: {
     id: number;
@@ -12,15 +13,16 @@ type CustomSelectProps = {
     isActive: boolean;
     productAttributeValueGroupId: number;
   }[];
-  handleInput: (event: any) => void;
+  handleInput: (event: React.ChangeEvent<HTMLSelectElement>) => void;
 };
 
 const CustomSelect = ({
   labalText,
   labelFor,
+  name,
   id,
   options,
-  handleInput
+  handleInput,
 }: CustomSelectProps) => {
   return (
     <>
@@ -31,16 +33,19 @@ const CustomSelect = ({
         onChange={(event) => handleInput(event)}
         id={id}
         className={SelectStyle.InputStyle}
-        name="test"
+        name={name}
         required
       >
         <option defaultValue="">انتخاب کنید</option>
-        {options.map((feature) => (
-          feature.isActive ?
-          <option key={feature.id} value={feature.featureAttributesValues}>
-            {feature.featureAttributesValues}
-          </option> : ''
-        ))}
+        {options.map((feature) =>
+          feature.isActive ? (
+            <option key={feature.id} value={feature.id}>
+              {feature.featureAttributesValues}
+            </option>
+          ) : (
+            ""
+          )
+        )}
       </select>
     </>
   );

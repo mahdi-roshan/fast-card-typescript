@@ -1,5 +1,5 @@
 import React from "react";
-import { InputStyles } from './styles';
+import { InputStyles } from "./styles";
 
 type CustomInputProps = {
   labalText?: string;
@@ -8,7 +8,7 @@ type CustomInputProps = {
   id?: string;
   name: string;
   defaultValue?: string;
-  handleInput: (event: any) => void;
+  handleInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const CustomInput = ({
@@ -32,6 +32,7 @@ const CustomInput = ({
         className={InputStyles.InputStyle}
         defaultValue={defaultValue}
         onChange={(event) => handleInput(event)}
+        required
       />
     </>
   );

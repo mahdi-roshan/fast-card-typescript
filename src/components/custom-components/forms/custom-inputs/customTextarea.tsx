@@ -6,7 +6,7 @@ type CustomTextareaProps = {
   id?: string;
   name?: string;
   rows?: number;
-  handleInput: (event: any) => void;
+  handleInput: (event: React.ChangeEvent<HTMLTextAreaElement>) => void;
 };
 
 const CustomTextarea = ({
@@ -28,6 +28,7 @@ const CustomTextarea = ({
         name={name}
         className={TextareaStyle.InputStyle}
         onChange={(event) => handleInput(event)}
+        required
       ></textarea>
     </>
   );

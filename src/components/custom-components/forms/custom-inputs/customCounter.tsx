@@ -1,4 +1,4 @@
-import { useState } from "react";
+import React from "react";
 import { CounterStyle } from "./styles";
 
 type CounterProps = {
@@ -8,7 +8,10 @@ type CounterProps = {
   value: number;
   id: string;
   name: string;
-  handleInput: (event: any) => void;
+  handleInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  setValue: any;
+  incrementDecrement: boolean;
+  handleIncDecQuantity: (type: 1 | 2) => void;
 };
 
 const Counter = ({
@@ -19,17 +22,30 @@ const Counter = ({
   value,
   name,
   handleInput,
+  setValue,
+  incrementDecrement,
+  handleIncDecQuantity,
 }: CounterProps) => {
-  const [quantity, setQuantity] = useState(value);
-
-  const increment = () => {
-    console.log(quantity)
-    setQuantity(quantity + 1);
+  const increment = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (incrementDecrement) {
+      handleIncDecQuantity(1);
+    } else {
+      if (value < 10) {
+        setValue(value + 1);
+      }
+    }
   };
 
-  const decrement = () => {
-    console.log(quantity)
-    setQuantity(quantity - 1);
+  const decrement = (e: React.MouseEvent) => {
+    e.preventDefault();
+    if (incrementDecrement) {
+      handleIncDecQuantity(2);
+    } else {
+      if (value > 0) {
+        setValue(value - 1);
+      }
+    }
   };
 
   return (
@@ -51,8 +67,9 @@ const Counter = ({
           id={id}
           className={CounterStyle.InputStyle}
           name={name}
-          value={quantity}
+          value={value}
           onChange={handleInput}
+          required
         ></input>
         <button className={CounterStyle.IncButtonStyle} onClick={increment}>
           <span className="m-auto text-2xl font-thin dark:text-white text-gray-900">

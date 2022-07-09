@@ -1,28 +1,26 @@
 import React from "react";
 
 type CustomButtonProps = {
-  type?: 'submit';
-  handleClick: (event: React.MouseEvent<HTMLElement>, id: number) => void;
+  type?: "submit";
   styles: string;
   textStyle: string;
   text: string;
+  refetch: any;
 };
 
 const CustomButton = ({
   type = "submit",
-  handleClick,
   styles,
   textStyle,
   text,
+  refetch,
 }: CustomButtonProps) => {
   return (
     <>
-      <button
-        type={type}
-        onClick={(event) => handleClick(event, 1)}
-        className={styles}
-      >
-        <span className={textStyle}>{text}</span>
+      <button type={type} className={styles}>
+        <span onClick={refetch} className={textStyle}>
+          {text}
+        </span>
       </button>
     </>
   );

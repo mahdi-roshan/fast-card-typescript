@@ -1,9 +1,11 @@
 import { createRoot } from "react-dom/client";
 import { QueryClient, QueryClientProvider } from "react-query";
-import { ReactQueryDevtools } from 'react-query/devtools'
+import { ReactQueryDevtools } from "react-query/devtools";
 import { BrowserRouter } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 import "./index.css";
+import "react-toastify/dist/ReactToastify.css";
 
 import App from "./App";
 
@@ -23,5 +25,6 @@ root.render(
       <App />
       <ReactQueryDevtools initialIsOpen={false} />
     </BrowserRouter>
+    <ToastContainer bodyClassName="font-yekan" />
   </QueryClientProvider>
 );

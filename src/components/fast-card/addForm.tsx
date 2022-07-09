@@ -1,5 +1,12 @@
-import { useState } from "react";
-import { useProvinces, useCity } from "../../hooks/fast-card-hooks/useFastCard";
+import React, { useState } from "react";
+import {
+  useProvinces,
+  useCity,
+  useAddOrder,
+} from "../../hooks/fast-card-hooks/useFastCard";
+import { toast } from "react-toastify";
+
+import { ValidatorPhone } from "./../../custom-functions/validate-phone-number/validator";
 
 import Counter from "../custom-components/forms/custom-inputs/customCounter";
 import CustomButton from "../custom-components/forms/customButton";
@@ -8,11 +15,32 @@ import CustomInput from "../custom-components/forms/custom-inputs/customInput";
 import CustomSelect from "../custom-components/forms/custom-inputs/customSelect";
 import CustomTextarea from "../custom-components/forms/custom-inputs/customTextarea";
 
-const AddFrom = (props: any) => {
-  const { feature } = props;
+type InfoState = {
+  name: string;
+  address: string;
+  phone: number | string;
+  quantity: number;
+  feature: number | string;
+  state: number | string;
+  city: number | string;
+};
 
+type AddFormProps = {
+  productId: number;
+  feature: {
+    featureAttributesValues: string;
+    id: number;
+    isActive: boolean;
+    lastFeatureIdFk: number;
+    productAttributeValueGroupId: number;
+    productIdFk: number;
+  }[];
+};
+
+const AddFrom = ({ productId, feature }: AddFormProps) => {
+  // fetch city state base on stateId
   const [stateId, setStateId] = useState(0);
-  const [info, setInfo] = useState({
+  const [info, setInfo] = useState<InfoState>({
     name: "",
     phone: "",
     feature: "",
@@ -24,34 +52,90 @@ const AddFrom = (props: any) => {
 
   const { data: provinceData, isLoading: provincLoading } = useProvinces();
   const { data: cityData } = useCity(stateId);
+  const { data: addOrderData, refetch } = useAddOrder({ ...info, productId });
 
-  const handleInput = async (e: any) => {
+  const handleInput = async (
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLSelectElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     let name = e.target.name;
     let value = e.target.value;
-    console.log(name);
 
+    // we need stateId so filter state list then compare and fetchout Id from list
     if (e.target.name === "state") {
-      let provinceId = provinceData?.data.data.filter((item: any) => {
-        return e.target.value === item.text.trim();
-      });
+      let provinceId = provinceData?.data.data.filter(
+        (item: { longValue: null; text: string; value: number }) => {
+          return e.target.value === item.text.trim();
+        }
+      );
+      // fetch city list base On stateId
       setStateId(provinceId[0].value);
     }
 
-    // setInfo((prevState) => {
-    //   return {
-    //     ...prevState,
-    //     [name]: value,
-    //   };
-    // });
+    setInfo(() => {
+      let temp: any = { ...info };
+      temp[name] = value;
+      return temp;
+    });
   };
 
-  const handleSubmit = (e: any) => {
-    e.preventDefault();
+  // increment & decrement qunatity in parent component
+  // according <--incrementDecrement--> key for custom counter component
+  const handleIncDecQuantity = (type: 1 | 2) => {
+    if (type === 1) {
+      if (info.quantity < 10) {
+        setInfo((prevState) => {
+          return {
+            ...prevState,
+            quantity: +info.quantity + 1,
+          };
+        });
+      }
+    } else if (info.quantity > 1) {
+      setInfo((prevState) => {
+        return {
+          ...prevState,
+          quantity: +info.quantity - 1,
+        };
+      });
+    }
   };
 
-  const handleClick = (e: any) => {
+  const handleSubmit = (e: React.SyntheticEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(e, 1);
+    if (!ValidatorPhone(info.phone)) {
+      toast.error("فرمت شماره همراه اشتباه است", {
+        position: "top-right",
+        autoClose: 5000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+        progress: undefined,
+      });
+    } else {
+      // set stateId and cityId
+      let provinceId = provinceData?.data.data.filter(
+        (item: { longValue: null; text: string; value: number }) => {
+          return info.state === item.text.trim();
+        }
+      );
+      let cityId = cityData?.data.data.filter(
+        (item: { longValue: null; text: string; value: number }) => {
+          return info.city === item.text;
+        }
+      );
+      setInfo((prevState) => {
+        return {
+          ...prevState,
+          state: provinceId[0].value,
+          city: cityId[0].value,
+        };
+      });
+      console.log(addOrderData?.data.data);
+    }
   };
 
   return (
@@ -94,8 +178,9 @@ const AddFrom = (props: any) => {
               <CustomSelect
                 {...{
                   labalText: "ویژگی",
-                  labelFor: "features",
-                  id: "features",
+                  labelFor: "feature",
+                  id: "feature",
+                  name: "feature",
                   options: feature,
                   handleInput,
                 }}
@@ -112,6 +197,9 @@ const AddFrom = (props: any) => {
                   id: "quantity",
                   name: "qunatity",
                   handleInput,
+                  setValue: setInfo,
+                  incrementDecrement: true,
+                  handleIncDecQuantity,
                 }}
               />
             </div>
@@ -161,7 +249,6 @@ const AddFrom = (props: any) => {
                   handleInput,
                 }}
               />
-              ُ
             </div>
           </div>
           <div className="mt-4">
@@ -172,7 +259,7 @@ const AddFrom = (props: any) => {
                   "w-full text-center transition ease-in duration-300 text-sm font-medium mb-2 md:mb-0 bg-purple-500 px-5 hover:shadow-lg tracking-wider text-white rounded-lg hover:bg-purple-600 py-3",
                 textStyle: "text-center font-bold text-lg",
                 text: "ادامه خرید محصول",
-                handleClick,
+                refetch,
               }}
             />
           </div>

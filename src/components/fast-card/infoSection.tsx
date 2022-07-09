@@ -2,7 +2,8 @@ import AddFrom from "./addForm";
 
 const InfoSection = (props: any) => {
   console.log(props);
-  const { title, price, discountPrice, mainPicture } = props.shopsProduct;
+  const { title, price, discountPrice, mainPicture, productId } =
+    props.shopsProduct;
   const { feature } = props;
   return (
     <>
@@ -42,7 +43,7 @@ const InfoSection = (props: any) => {
               </div>
             </div>
             <div>
-              <AddFrom feature={feature}/>
+              <AddFrom productId={productId} feature={feature} />
             </div>
           </div>
         </div>

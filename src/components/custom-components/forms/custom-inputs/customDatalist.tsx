@@ -12,7 +12,7 @@ type CustomDatalistProps = {
     value: number;
     longValue: any;
   }[];
-  handleInput: (event: any) => void;
+  handleInput: (event: React.ChangeEvent<HTMLInputElement>) => void;
 };
 
 const CustomDatalist = ({
@@ -36,6 +36,7 @@ const CustomDatalist = ({
         list={list}
         name={name}
         className={DataListStyle.InputStyle}
+        required
       />
 
       <datalist id={id}>
