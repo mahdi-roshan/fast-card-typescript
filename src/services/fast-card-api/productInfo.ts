@@ -55,4 +55,35 @@ function addOrder(orderInf: {
   );
 }
 
-export { fetchProductInfo, fetchProvices, fetchCity, addOrder };
+function getPaymentMethod(orderId: number) {
+  return axios.get(
+    `https://dayanshop.com/cart/getPaymentTypes?orderId=${orderId}`
+  );
+}
+
+function orderCost(orderDetail: {
+  cityId: string;
+  featureId: number;
+  paymentType: number;
+  productCount: number;
+  productId: number;
+  stateId: string;
+}) {
+  return axios.post(
+    `https://dayanshop.com/api/client/v1/order/fast-cart/post-cost`,
+    [
+      {
+        cityId: orderDetail.cityId,
+        customerFamily: "",
+        customerName: "",
+        featureId: orderDetail.featureId,
+        paymentType: orderDetail.paymentType,
+        productCount: orderDetail.productCount,
+        productId: orderDetail.productId,
+        stateId: orderDetail.stateId,
+      },
+    ]
+  );
+}
+
+export { fetchProductInfo, fetchProvices, fetchCity, addOrder, orderCost , getPaymentMethod };

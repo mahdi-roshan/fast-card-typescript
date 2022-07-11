@@ -5,7 +5,7 @@ type CustomButtonProps = {
   styles: string;
   textStyle: string;
   text: string;
-  refetch: any;
+  // refetch: any;
 };
 
 const CustomButton = ({
@@ -13,12 +13,12 @@ const CustomButton = ({
   styles,
   textStyle,
   text,
-  refetch,
+  // refetch,
 }: CustomButtonProps) => {
   return (
     <>
       <button type={type} className={styles}>
-        <span onClick={refetch} className={textStyle}>
+        <span className={textStyle}>
           {text}
         </span>
       </button>

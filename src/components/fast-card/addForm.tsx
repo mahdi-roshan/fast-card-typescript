@@ -1,10 +1,13 @@
 import React, { useState } from "react";
+import { useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
+import { toast } from "react-toastify";
+
 import {
   useProvinces,
   useCity,
   useAddOrder,
 } from "../../hooks/fast-card-hooks/useFastCard";
-import { toast } from "react-toastify";
 
 import { ValidatorPhone } from "./../../custom-functions/validate-phone-number/validator";
 
@@ -14,6 +17,7 @@ import CustomDatalist from "../custom-components/forms/custom-inputs/customDatal
 import CustomInput from "../custom-components/forms/custom-inputs/customInput";
 import CustomSelect from "../custom-components/forms/custom-inputs/customSelect";
 import CustomTextarea from "../custom-components/forms/custom-inputs/customTextarea";
+import { saveOrderRes } from "../../types/fastCard/fastCardTypes";
 
 type InfoState = {
   name: string;
@@ -38,6 +42,9 @@ type AddFormProps = {
 };
 
 const AddFrom = ({ productId, feature }: AddFormProps) => {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate();
+
   // fetch city state base on stateId
   const [stateId, setStateId] = useState(0);
   const [info, setInfo] = useState<InfoState>({
@@ -52,7 +59,7 @@ const AddFrom = ({ productId, feature }: AddFormProps) => {
 
   const { data: provinceData, isLoading: provincLoading } = useProvinces();
   const { data: cityData } = useCity(stateId);
-  const { data: addOrderData, refetch } = useAddOrder({ ...info, productId });
+  const { mutate } = useAddOrder();
 
   const handleInput = async (
     e:
@@ -134,7 +141,39 @@ const AddFrom = ({ productId, feature }: AddFormProps) => {
           city: cityId[0].value,
         };
       });
-      console.log(addOrderData?.data.data);
+
+      mutate(
+        {
+          name: info.name,
+          address: info.address,
+          phone: info.phone,
+          productId: productId,
+          count: info.quantity,
+          featureId: info.feature,
+        },
+        {
+          onSuccess: async (
+            data,
+            variables: {
+              name: string;
+              address: string;
+              phone: number | string;
+              productId: number;
+              count: number;
+              featureId: number | string;
+            }
+          ) => {
+            queryClient.setQueryData(["order-info", variables.productId], {
+              variables,
+              data,
+            });
+            navigate(`/invoice/${variables.productId}`);
+          },
+          onError: async (error: any) => {
+            console.log(error);
+          },
+        }
+      );
     }
   };
 
@@ -259,7 +298,6 @@ const AddFrom = ({ productId, feature }: AddFormProps) => {
                   "w-full text-center transition ease-in duration-300 text-sm font-medium mb-2 md:mb-0 bg-purple-500 px-5 hover:shadow-lg tracking-wider text-white rounded-lg hover:bg-purple-600 py-3",
                 textStyle: "text-center font-bold text-lg",
                 text: "ادامه خرید محصول",
-                refetch,
               }}
             />
           </div>

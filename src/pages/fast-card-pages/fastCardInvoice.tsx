@@ -1,7 +1,35 @@
+import { useQuery, useQueryClient } from "react-query";
+import { useNavigate, useParams } from "react-router-dom";
+import { useOrderCost } from "../../hooks/fast-card-hooks/useFastCard";
+import { getPaymentMethod } from "../../services/fast-card-api/productInfo";
+// import { useCheckOrder } from "../../hooks/fast-card-hooks/useFastCard";
+
 const FastCardInvoice = () => {
+  const queryClient = useQueryClient();
+  const params = useParams();
+  const navigate = useNavigate();
+
+  const { data: orderInfo, variables }: any = queryClient.getQueryData([
+    "order-info",
+    parseInt(params.productId!),
+  ]);
+
+  console.log(orderInfo.data.data.data.mainOrderId);
+
+  const { data: paymentData } = useQuery(
+    "payment",
+    () => getPaymentMethod(orderInfo.data.data.data.mainOrderId),
+    {
+      enabled: !!orderInfo.data.data.data.mainOrderId,
+    }
+  );
+
+  console.log(paymentData)
+  // const {data : postCostData } = useOrderCost()
+
   return (
     <>
-      <div className="container mx-auto h-screen flex items-center justify-center">
+      {/* <div className="container mx-auto h-screen flex items-center justify-center">
         <div className="relative overflow-x-auto sm:rounded-lg w-[50%]">
           <table className="text-sm text-left w-full text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
@@ -122,7 +150,7 @@ const FastCardInvoice = () => {
             </tbody>
           </table>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };
